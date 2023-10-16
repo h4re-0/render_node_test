@@ -58,21 +58,9 @@ function makeUpdateQuizURL(quizDatum) {
 
     console.log(encodeURIComponent(quizDatum.content));
 
-    const url = `updateQuiz.html?id=${id}&content=${content}&answer=${answer}&comment=${comment}`;
+    const url = `updatequiz.html?id=${id}&content=${content}&answer=${answer}&comment=${comment}`;
 
     return url;
-}
-
-function openUpdateQuiz(quizDatum) {
-    const id = quizDatum.id;
-    const content = encodeURIComponent(quizDatum.content);
-    const answer = encodeURIComponent(quizDatum.answer);
-    const comment = encodeURIComponent(quizDatum.comment);
-
-    console.log(encodeURIComponent(quizDatum.content));
-
-    const url = `updateQuiz.html?id=${id}&content=${content}&answer=${answer}&comment=${comment}`
-    window.location.href = url;
 }
 
 $(document).ready(function () {
