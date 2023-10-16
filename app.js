@@ -17,13 +17,13 @@ app.get('/staff', async (req, res) => {
     host: process.env.pghost,
     database: process.env.pgdatabase,
     password: process.env.pgpassword,
-    port: process.env.pgport,  
-    ssl: {},
+    port: process.env.pgport,
+    ssl: { rejectUnauthorized: false },
   };
-  
+
   console.log(pgOption);
   const pool = new Pool(pgOption);
-  
+
   try {
     const result = await pool.query('SELECT * FROM staff');
     res.json(result.rows);
