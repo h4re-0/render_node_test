@@ -18,9 +18,7 @@ app.get('/staff', async (req, res) => {
     database: process.env.pgdatabase,
     password: process.env.pgpassword,
     port: process.env.pgport,  
-    ssl: {
-      rejectUnauthorized: false,
-    },
+    ssl: {},
   };
   
   console.log(pgOption);
