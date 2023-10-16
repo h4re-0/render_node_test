@@ -17,17 +17,20 @@
     <main>
         <h2>クイズ投稿</h2>
         <form id="post-quiz">
-            <div class="content-area">
+            <div class="content-area area">
+                <label>問題</label>
                 <textarea name="content" rows="8"></textarea>
             </div>
-            <div class="answer-area">
+            <div class="answer-area area">
+                <label>回答</label>
                 <textarea name="answer" rows="1"></textarea>
             </div>
-            <div class="comment-area">
+            <div class="comment-area area">
+                <label>解説など</label>
                 <textarea name="comment" rows="8"></textarea>
             </div>
             <div class="submit-area">
-                <button type="submit">投稿する</button>
+                <button id="submitbutton" type="submit">投稿する</button>
             </div>
         </form>
 

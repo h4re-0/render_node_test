@@ -6,12 +6,15 @@ $(document).ready(function () {
         const answer = $('textarea[name="answer"]').val();
         const comment = $('textarea[name="comment"]').val();
 
+        $("#submitbutton").prop("disabled", true);
+        
         const response = await axios.post("/post_quiz", {
             content: content,
             answer: answer,
             comment: comment
         });
-
+        
+        window.location.href = "/";
         return false;
     });
 });

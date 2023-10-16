@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+    <title>早押しクイズ投稿サイト</title>
+    <link rel="stylesheet" href="whole.css">
+</head>
+
+<body>
+    <header>
+        <h1>早押しクイズ投稿サイト</h1>
+    </header>
+    <nav>
+        <div>
+            <a href="/index.html">トップに戻る</a>
+        </div>
+    </nav>
+    <main>
+        <h2>クイズ修正</h2>
+        <form id="post-quiz">
+            <textarea hidden name="id"></textarea>
+            <div class="content-area area">
+                <label>問題</label>
+                <textarea name="content" rows="8"></textarea>
+            </div>
+            <div class="answer-area area">
+                <label>回答</label>
+                <textarea name="answer" rows="1"></textarea>
+            </div>
+            <div class="comment-area area">
+                <label>解説など</label>
+                <textarea name="comment" rows="8"></textarea>
+            </div>
+            <div class="submit-area">
+                <button id="submitbutton" type="submit">投稿する</button>
+            </div>
+        </form>
+
+    </main>
+    <footer>
+
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="putQuiz.js"></script>
+</body>

@@ -12,20 +12,36 @@
 }
 
 #quiz-list .answer {
-    width: 100px;
+    width: 180px;
 }
 
 #quiz-list .comment {
     width: 800px;
 }
 
-#post-quiz{
+#quiz-list .deletebutton {
+    width: 50px;
+}
+
+#quiz-list .updatebutton {
+    width: 50px;
+}
+
+#post-quiz {
     display: flex;
     flex-direction: column;
 }
 
+#post-quiz .area {
+    display: flex;
+}
+
+#post-quiz .area label{
+    width: 100px;
+}
+
 #post-quiz textarea,
-#post-quiz input{
+#post-quiz input {
     font-size: 18px;
     width: 800px;
 }
