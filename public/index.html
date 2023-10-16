@@ -2,19 +2,27 @@
 
 <head>
     <title>早押しクイズ投稿サイト</title>
+    <link rel="stylesheet" href="whole.css">
 </head>
 
 <body>
     <header>
-
+        <h1>早押しクイズ投稿サイト</h1>
     </header>
-    <h1>早押しクイズ投稿サイト</h1>
-    <aside>
-
-    </aside>
+    <nav>
+        <div>
+            <a href="/post.html">クイズを投稿する</a>
+        </div>
+    </nav>
     <main>
-        <ul id="quiz-list">
-        </ul>
+        <h2>クイズ一覧</h2>
+        <table id="quiz-list">
+            <tr class="quiz">
+                <th class="content">問題</th>
+                <th class="answer">答え</th>
+                <th class="comment">解説</th>
+            </tr>
+        </table>
     </main>
     <footer>
 
@@ -23,4 +31,7 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="quizList.js"></script>
+    <script>
+        quizAll($("#quiz-list"));
+    </script>
 </body>

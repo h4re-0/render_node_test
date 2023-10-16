@@ -1,0 +1,31 @@
+#quiz-list {
+    border-collapse: collapse;
+}
+
+#quiz-list th,
+#quiz-list td {
+    border: solid;
+}
+
+#quiz-list .content {
+    width: 600px;
+}
+
+#quiz-list .answer {
+    width: 100px;
+}
+
+#quiz-list .comment {
+    width: 800px;
+}
+
+#post-quiz{
+    display: flex;
+    flex-direction: column;
+}
+
+#post-quiz textarea,
+#post-quiz input{
+    font-size: 18px;
+    width: 800px;
+}
