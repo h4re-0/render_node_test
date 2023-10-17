@@ -4,6 +4,7 @@ $(document).ready(async function () {
 
     // URLSearchParamsオブジェクトを取得
     let params = url.searchParams;
+    
     const id = params.get("id");
     $('textarea[name="id"]').val(id);
 

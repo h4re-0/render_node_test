@@ -1,7 +1,22 @@
+function showLoading(flg){
+    const eQuizLoading = $('#quiz-loading');
+    if(flg){
+        eQuizLoading.append($('<span>now loading</span>'));
+    } else{
+        eQuizLoading.empty();
+    }
+}
+
 async function quizAll() {
+    // URLパラメータを取得
+    const url = new URL(window.location.href);
+    const urlParams = url.searchParams;
+
+    // クイズ表を初期化
     const eQuizList = $('#quiz-list');
     eQuizList.empty();
 
+    // クイズ表の1行目を表示
     let eHead = $(`
     <tr class="quiz">
         <th class="content">問題</th>
@@ -12,14 +27,23 @@ async function quizAll() {
     </tr>`);
     eQuizList.append(eHead);
 
-    const eQuizLoading = $('#quiz-loading');
-    eQuizLoading.append($('<span>now loading</span>'));
-
     try {
-        const response = await axios.get("/quiz_all");
-        const data = response.data;
-        console.log(data);
+        showLoading(true);
 
+        let params = {};
+
+        if(urlParams.get("order") !== undefined){
+            params.order = urlParams.get("order");
+        }
+
+        const response = await axios.get("/quiz_search",{
+            params:params
+        });
+
+        showLoading(false);
+
+        const data = response.data;
+        // リストの更新
         for (let i = 0; i < data.length; i++) {
             let eQuiz = $(`
             <tr class="quiz">
@@ -31,8 +55,6 @@ async function quizAll() {
             </tr>`);
             eQuizList.append(eQuiz);
         }
-
-        eQuizLoading.empty();
     } catch (error) {
         console.log(error);
     }

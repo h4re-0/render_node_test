@@ -32,11 +32,27 @@ function getPool() {
 }
 
 // 全問取得api
-app.get('/quiz_all', async (req, res) => {
+app.get('/quiz_search', jsonParser, async (req, res) => {
   const pool = getPool();
 
+  console.log(req.query);
+  let sqlWhere = "";
+  let sqlOrder = "";
+  let sqlValue = [];
+  const order = req.query.order;
+  if(order == "order_random"){
+    sqlOrder = "ORDER BY RANDOM()"
+  } else if(order == "order_id"){
+    sqlOrder = "ORDER BY id"
+  } else {
+    sqlOrder = "ORDER BY id"
+  }
+
+  if(sqlWhere=="")sqlWhere+="TRUE";
   const query = `
   SELECT * FROM quizdata
+  WHERE ${sqlWhere}
+  ${sqlOrder}
   `
 
   try {
