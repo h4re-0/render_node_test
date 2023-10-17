@@ -15,23 +15,21 @@
         </div>
     </nav>
     <main>
-        <h2>クイズ修正</h2>
-        <form id="post-quiz">
-            <textarea hidden name="id"></textarea>
-            <div class="content-area area">
-                <label>問題</label>
-                <textarea name="content" rows="8"></textarea>
-            </div>
-            <div class="answer-area area">
-                <label>回答</label>
-                <textarea name="answer" rows="1"></textarea>
-            </div>
-            <div class="comment-area area">
-                <label>解説など</label>
-                <textarea name="comment" rows="8"></textarea>
+        <h2>クイズ一括投稿</h2>
+        <form id="post-many-quiz">
+            <div>
+                <label>csvファイルを選択</label>
+                <input type="file" id="quiz-file" accept="text/csv">
+                <table id="posted-quiz" class="quiz-list">
+                    <tr>
+                        <th class="content">問題</th>
+                        <th class="answer">答え</th>
+                        <th class="comment">解説</th>
+                    </tr>
+                </table>
             </div>
             <div class="submit-area">
-                <button id="submitbutton" type="submit">修正する</button>
+                <button id="submitbutton" type="submit">一括投稿する</button>
             </div>
         </form>
 
@@ -42,5 +40,6 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="putQuiz.js"></script>
+    <script src="utiloj.js"></script>
+    <script src="postManyQuiz.js"></script>
 </body>

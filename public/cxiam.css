@@ -1,21 +1,21 @@
-#quiz-list {
+.quiz-list {
     border-collapse: collapse;
 }
 
-#quiz-list th,
-#quiz-list td {
+.quiz-list th,
+.quiz-list td {
     border: solid;
 }
 
-#quiz-list .content {
+.quiz-list .content {
     width: 600px;
 }
 
-#quiz-list .answer {
+.quiz-list .answer {
     width: 180px;
 }
 
-#quiz-list .comment {
+.quiz-list .comment {
     width: 800px;
 }
 

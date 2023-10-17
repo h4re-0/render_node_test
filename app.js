@@ -90,9 +90,40 @@ app.post('/post_quiz', jsonParser, async (req, res) => {
   }
 });
 
+// 問題投稿api
+app.post('/post_many_quiz', jsonParser, async (req, res) => {
+  const pool = getPool();
+  console.log(req.body.quiz);
+  const quiz = req.body.quiz;
+
+  let valueList = [];
+  let sqlPlaceHolder = "";
+  let temp = 1;
+  for (let i = 0; i < quiz.length; i++) {
+    valueList.push(quiz[i].content);
+    valueList.push(quiz[i].answer);
+    valueList.push(quiz[i].comment);
+
+    if (sqlPlaceHolder != "") sqlPlaceHolder += ",";
+    sqlPlaceHolder+= `($${temp++},$${temp++},$${temp++},null)`
+  }
+
+  const query = `
+  INSERT INTO quizdata (content, answer, comment, creator_id)
+  VALUES ${sqlPlaceHolder}
+  `
+
+  try {
+    const result = await pool.query(query, valueList);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 // 問題削除api
 app.delete('/delete_quiz', jsonParser, async (req, res) => {
-  console.log(req.body);
   const pool = getPool();
 
   const id = req.body.id;
@@ -113,7 +144,6 @@ app.delete('/delete_quiz', jsonParser, async (req, res) => {
 
 // 問題更新api
 app.put('/put_quiz', jsonParser, async (req, res) => {
-  console.log(req.body);
   const pool = getPool();
 
   const id = req.body.id;
@@ -128,7 +158,6 @@ app.put('/put_quiz', jsonParser, async (req, res) => {
       comment = $3
   WHERE id = $4
   `
-  console.log(query);
 
   try {
     const result = await pool.query(query, [content, answer, comment, id]);

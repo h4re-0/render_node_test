@@ -50,10 +50,6 @@ async function deleteQuiz(quizId) {
     quizAll();
 }
 
-function sanitize(str){
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
 function openUpdateQuiz(quizId){
     const url = `updatequiz.html?id=${quizId}`;
     
