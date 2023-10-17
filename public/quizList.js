@@ -23,11 +23,11 @@ async function quizAll() {
         for (let i = 0; i < data.length; i++) {
             let eQuiz = $(`
             <tr class="quiz">
-            <td class="content">${data[i].content}</td>
-            <td class="answer">${data[i].answer}</td>
-            <td class="comment">${data[i].comment.split('\\n').join("<br>")}</td>
+            <td class="content">${sanitize(data[i].content).split('\n').join("<br>")}</td>
+            <td class="answer">${sanitize(data[i].answer)}</td>
+            <td class="comment">${sanitize(data[i].comment).split('\n').join("<br>")}</td>
             <td class="deletebutton"><button onClick="deleteQuiz(${data[i].id})">削除</button></td>
-            <td class="updatebutton"><button><a href="${makeUpdateQuizURL(data[i])}">変更</a></button></td>
+            <td class="updatebutton"><button onClick="openUpdateQuiz(${data[i].id})">変更</a></button></td>
             </tr>`);
             eQuizList.append(eQuiz);
         }
@@ -50,17 +50,14 @@ async function deleteQuiz(quizId) {
     quizAll();
 }
 
-function makeUpdateQuizURL(quizDatum) {
-    const id = quizDatum.id;
-    const content = encodeURIComponent(quizDatum.content);
-    const answer = encodeURIComponent(quizDatum.answer);
-    const comment = encodeURIComponent(quizDatum.comment);
+function sanitize(str){
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 
-    console.log(encodeURIComponent(quizDatum.content));
-
-    const url = `updatequiz.html?id=${id}&content=${content}&answer=${answer}&comment=${comment}`;
-
-    return url;
+function openUpdateQuiz(quizId){
+    const url = `updatequiz.html?id=${quizId}`;
+    
+    window.location.href = url;
 }
 
 $(document).ready(function () {

@@ -1,17 +1,22 @@
-$(document).ready(function () {
+$(document).ready(async function () {
     // URLを取得
     let url = new URL(window.location.href);
 
     // URLSearchParamsオブジェクトを取得
     let params = url.searchParams;
+    const id = params.get("id");
+    $('textarea[name="id"]').val(id);
 
-    $('textarea[name="id"]').val(params.get("id"));
-    $('textarea[name="content"]').val(params.get("content"));
-    $('textarea[name="answer"]').val(params.get("answer"));
-    $('textarea[name="comment"]').val(params.get("comment"));
+    const response = await axios.get('/quiz_single', {
+        params: {
+            id: id
+        }
+    });
 
-    $("#submitbutton").prop("disabled", true);
-    
+    $('textarea[name="content"]').val(response.data.content);
+    $('textarea[name="answer"]').val(response.data.answer);
+    $('textarea[name="comment"]').val(response.data.comment);
+
     $('#post-quiz').submit(async function (event) {
         event.preventDefault(); // デフォルトのフォーム送信動作をキャンセル
 
@@ -20,6 +25,8 @@ $(document).ready(function () {
         const content = $('textarea[name="content"]').val();
         const answer = $('textarea[name="answer"]').val();
         const comment = $('textarea[name="comment"]').val();
+
+        $("#submitbutton").prop("disabled", true);
 
         console.log(id);
 
