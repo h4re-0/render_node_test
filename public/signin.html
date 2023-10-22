@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<head>
+    <title>早押しクイズ投稿サイト</title>
+    <link rel="stylesheet" href="cxiam.css">
+</head>
+
+<body>
+    <header>
+        <h1>早押しクイズ投稿サイト</h1>
+    </header>
+    <div>
+        <a href="/index.html">トップに戻る</a>
+    </div>
+    <main>
+        <form action="/login/password" method="post">
+            <section>
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+            </section>
+            <section>
+                <label for="current-password">Password</label>
+                <input id="current-password" name="password" type="password" autocomplete="current-password" required>
+            </section>
+            <button type="submit">Sign in</button>
+        </form>
+    </main>
+    <footer>
+
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"
+        integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="utiloj.js"></script>
+</body>

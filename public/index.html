@@ -10,18 +10,20 @@
         <h1>早押しクイズ投稿サイト</h1>
     </header>
     <nav>
-
+        <div>
+            <a href="signin.html">Sign In</a>
+        </div>
+        <div>
+            <a href="signup.html">Sign Up</a>
+        </div>
+        <div>
+            <button id="signout" onclick="signout()">Sign Out</button>
+        </div>
         <div>
             <a href="createquiz.html">クイズを投稿する</a>
         </div>
         <div>
             <a href="postmanyquiz.html">クイズを一斉投稿する</a>
-        </div>
-        <div id="g_id_onload" data-client_id="68542275638-13rhudn9bjm9a7viku0osqbgp0j6drtt" data-context="use"
-            data-ux_mode="popup" data-callback="googlelogin" data-auto_prompt="false">
-        </div>
-        <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
-            data-text="signin_with" data-size="large" data-logo_alignment="left">
         </div>
     </nav>
     <main>
@@ -57,26 +59,6 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="utiloj.js"></script>
+    <script src="signout.js"></script>
     <script src="quizList.js"></script>
-    <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
-    <script>
-        function googlelogin(a) {
-            const data = jwt_decode(a.credential);
-            console.log(a);
-            console.log(data);
-            console.log("ID", data.sub);
-        }
-    </script>
-    <script src="https://accounts.google.com/gsi/client" async></script>
-    <script>
-        handleCredentialResponse = () => {
-            console.log("RESPONSE");
-        }
-        window.onload = function () {
-            google.accounts.id.initialize({
-                client_id: '68542275638-13rhudn9bjm9a7viku0osqbgp0j6drtt',
-                callback: handleCredentialResponse
-            });
-        };
-    </script>
 </body>

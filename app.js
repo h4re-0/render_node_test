@@ -1,16 +1,31 @@
 const express = require("express");
-const bodyParser = require('body-parser')
-const { Pool } = require('pg');
+const router = require("./router/router.js").router;
+const passport = require('passport');
+const session = require('express-session');
+
 const app = express();
 const port = process.env.PORT || 3001;
 
-// create application/json parser
-var jsonParser = bodyParser.json();
+// テンプレートエンジンの指定
+app.set("view engine", "ejs");
 
-// create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+// リクエストをbodyで受け取れるようにする
+app.use(express.json())
 
+// formなどのデータをbodyで受け取れるようにする
+app.use(express.urlencoded({ extended: true }));
+
+// public以下のファイルをアクセス可能にする
 app.use(express.static('public'));
+app.use(session({
+  secret: 'keyboard dog',
+  resave: false,
+  saveUninitialized: false,
+  // store: 
+}));
+
+app.use(passport.initialize());
+app.use(passport.authenticate('session'));
 
 // ====サーバー設定====
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
@@ -18,170 +33,6 @@ const server = app.listen(port, () => console.log(`Example app listening on port
 server.keepAliveTimeout = 120 * 1000;
 server.headersTimeout = 120 * 1000;
 
-function getPool() {
-  const pgOption = {
-    user: process.env.pguser,
-    host: process.env.pghost,
-    database: process.env.pgdatabase,
-    password: process.env.pgpassword,
-    port: process.env.pgport,
-    ssl: { rejectUnauthorized: false },
-  };
-  const pool = new Pool(pgOption);
-  return pool;
-}
-
-// 全問取得api
-app.get('/quiz_search', jsonParser, async (req, res) => {
-  const pool = getPool();
-
-  console.log(req.query);
-  let sqlWhere = "";
-  let sqlOrder = "";
-  let sqlValue = [];
-  const order = req.query.order;
-  if(order == "order_random"){
-    sqlOrder = "ORDER BY RANDOM()"
-  } else if(order == "order_id"){
-    sqlOrder = "ORDER BY id"
-  } else {
-    sqlOrder = "ORDER BY id"
-  }
-
-  if(sqlWhere=="")sqlWhere+="TRUE";
-  const query = `
-  SELECT * FROM quizdata
-  WHERE ${sqlWhere}
-  ${sqlOrder}
-  `
-
-  try {
-    const result = await pool.query(query);
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-// 1問取得api
-app.get('/quiz_single', jsonParser, async (req, res) => {
-  const pool = getPool();
-
-  const id = req.query.id;
-
-  const query = `
-  SELECT * FROM quizdata
-  WHERE id = $1
-  `
-
-  try {
-    const result = await pool.query(query, [id]);
-    res.json(result.rows[0]);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-// 問題投稿api
-app.post('/post_quiz', jsonParser, async (req, res) => {
-  const pool = getPool();
-
-  const content = req.body.content;
-  const answer = req.body.answer;
-  const comment = req.body.comment;
-
-  const query = `
-  INSERT INTO quizdata (content, answer, comment, creator_id)
-  VALUES($1,$2,$3,null)
-  `
-
-  try {
-    const result = await pool.query(query, [content, answer, comment]);
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-// 問題投稿api
-app.post('/post_many_quiz', jsonParser, async (req, res) => {
-  const pool = getPool();
-  console.log(req.body.quiz);
-  const quiz = req.body.quiz;
-
-  let valueList = [];
-  let sqlPlaceHolder = "";
-  let temp = 1;
-  for (let i = 0; i < quiz.length; i++) {
-    valueList.push(quiz[i].content);
-    valueList.push(quiz[i].answer);
-    valueList.push(quiz[i].comment);
-
-    if (sqlPlaceHolder != "") sqlPlaceHolder += ",";
-    sqlPlaceHolder+= `($${temp++},$${temp++},$${temp++},null)`
-  }
-
-  const query = `
-  INSERT INTO quizdata (content, answer, comment, creator_id)
-  VALUES ${sqlPlaceHolder}
-  `
-
-  try {
-    const result = await pool.query(query, valueList);
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-// 問題削除api
-app.delete('/delete_quiz', jsonParser, async (req, res) => {
-  const pool = getPool();
-
-  const id = req.body.id;
-
-  const query = `
-  DELETE FROM quizdata
-  WHERE id = $1
-  `
-
-  try {
-    const result = await pool.query(query, [id]);
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-// 問題更新api
-app.put('/put_quiz', jsonParser, async (req, res) => {
-  const pool = getPool();
-
-  const id = req.body.id;
-  const content = req.body.content;
-  const answer = req.body.answer;
-  const comment = req.body.comment;
-
-  const query = `
-  UPDATE quizdata
-  SET content = $1,
-      answer = $2,
-      comment = $3
-  WHERE id = $4
-  `
-
-  try {
-    const result = await pool.query(query, [content, answer, comment, id]);
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
+// routerの設定
+app.use('/', router);
 
